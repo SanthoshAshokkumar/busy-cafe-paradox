@@ -42,7 +42,7 @@ A teaching model, not a forecast. Coefficients are assumptions, not estimates fr
 
 ## Built with
 
-Created with [Claude](https://claude.ai) and reviewed by me. Add a line here about what you validated or changed.
+Created with [Claude](https://claude.ai) and reviewed by me. 
 
 ## License
 
