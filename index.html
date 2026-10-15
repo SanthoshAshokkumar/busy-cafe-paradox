@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Busy Café Paradox — Pour Decision Café</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#EAF2EC;--card:#F8FCF9;--ink:#14302B;--mut:#58706A;--line:#CFE0D6;--gold:#F5B82E;--good:#1F8A5F;--bad:#C8415B;--c1:#14302B;--c2:#4F8F7C;--c3:#C8415B;--c4:#9DB5AC;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1D1A;--card:#16302B;--ink:#E7F3ED;--mut:#9DB7AE;--line:#264840;--good:#4CC391;--bad:#F07A93;--c1:#E7F3ED;--c2:#4F8F7C;--c3:#F07A93;--c4:#5E7D74}}
+:root[data-theme="dark"]{--bg:#0E1D1A;--card:#16302B;--ink:#E7F3ED;--mut:#9DB7AE;--line:#264840;--good:#4CC391;--bad:#F07A93;--c1:#E7F3ED;--c2:#4F8F7C;--c3:#F07A93;--c4:#5E7D74}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;margin:0;line-height:1.1}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);color:var(--bg);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;font-size:14px}
+.bar b{font-family:"Bricolage Grotesque",sans-serif;font-size:17px}
+.bar .pill{display:flex;gap:14px}
+.bar small{opacity:.75;display:block;font-size:11px}
+.hero{padding:28px 0 8px}
+.hero h1{font-size:clamp(34px,9vw,52px);font-weight:800;letter-spacing:-.02em}
+.hero p{font-size:18px;max-width:34em;margin:12px 0 0}
+.tag{display:inline-block;background:var(--gold);color:#14302B;font-weight:700;font-size:13px;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+.note{color:var(--mut);font-size:13px}
+section{margin-top:28px}
+h2{font-size:24px;margin-bottom:6px}
+.sub{color:var(--mut);margin:0 0 14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.ctl{padding:14px 0;border-top:1px solid var(--line)}
+.ctl:first-child{border-top:0;padding-top:2px}
+.ctl .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ctl label{font-weight:700}
+.val{font:800 22px "Bricolage Grotesque",sans-serif}
+.was{font-size:12px;color:var(--mut);min-height:16px}
+.help{font-size:13px;color:var(--mut);margin-top:2px}
+input[type=range]{width:100%;height:36px;accent-color:var(--good);margin:4px 0 0}
+.scn{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+button{font:inherit;cursor:pointer}
+.scn button{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 6px;font-weight:700;min-height:52px}
+.scn button.on{background:var(--ink);color:var(--bg)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+#scap{min-height:40px;margin:10px 2px 0;font-size:14px;color:var(--mut)}
+.reset{margin-top:12px;width:100%;border:0;background:transparent;color:var(--ink);text-decoration:underline;padding:10px;font-weight:700}
+.advisor{background:var(--ink);color:var(--bg);border-radius:20px;padding:18px;border-left:8px solid var(--gold)}
+.advisor .who{font-size:13px;opacity:.8;margin-bottom:6px}
+.advisor h3{font-size:22px;margin-bottom:8px}
+.advisor p{margin:8px 0 0}
+.advisor .hint{border-top:1px solid rgba(255,255,255,.25);padding-top:10px;margin-top:12px;font-size:14px}
+.row{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:8px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.row.h{border:0;color:var(--mut);font-size:12px;padding-top:0}
+.row b{font-family:"Bricolage Grotesque",sans-serif;font-size:17px}
+.chip{font-size:12px;font-weight:700;border-radius:99px;padding:2px 8px;white-space:nowrap}
+.up{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.dn{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.flat{color:var(--mut)}
+.bars .lab{font-size:13px;color:var(--mut);margin:12px 0 4px}
+.stack{position:relative;display:flex;height:30px;border-radius:8px;overflow:hidden;background:var(--line)}
+.stack i{display:block;height:100%;transition:width .25s}
+.mark{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--gold);transition:left .25s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut);margin-top:12px}
+.legend span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--k)}
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+summary{font-weight:700;cursor:pointer}
+details ul{padding-left:18px;font-size:14px}
+details li{margin:6px 0}
+code{font-size:13px;background:var(--line);padding:1px 5px;border-radius:5px}
+@media (max-width:480px){.row{grid-template-columns:1fr 1fr 1fr;}.row .chip{grid-column:1/-1;justify-self:start}.row.h span:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="bar" aria-live="polite"><b>Pour Decision Café</b><div class="pill"><div><small>Profit / day</small><span id="bp">—</span></div><div><small>Guest happiness</small><span id="bs">—</span></div></div></div>
+<div class="wrap">
+<header class="hero">
+  <span class="tag">Illustrative figures · not real café data</span>
+  <h1>The Busy Café Paradox</h1>
+  <p>Pour Decision Café is packed. Orders are up 18% on last year, yet profit is down 34%. You're the strategist. Change a setting and watch what really happens.</p>
+</header>
+
+<section>
+  <h2>Your levers</h2>
+  <p class="sub">Move a slider or pick a play. Everything below updates instantly.</p>
+  <div class="scn" role="group" aria-label="Scenarios">
+    <button data-s="grow">Grow Sales</button><button data-s="profit">Protect Profit</button><button data-s="delight">Delight Customers</button>
+  </div>
+  <div id="scap" aria-live="polite"></div>
+  <div class="panel">
+    <div class="ctl"><div class="top"><label for="price">Menu price</label><span class="val" id="v-price"></span></div>
+      <input type="range" id="price" min="4" max="9" step="0.25"><div class="was" id="w-price"></div><div class="help">Average price a guest pays per order. Lower prices draw bigger crowds.</div></div>
+    <div class="ctl"><div class="top"><label for="staff">Staff hours per day</label><span class="val" id="v-staff"></span></div>
+      <input type="range" id="staff" min="24" max="100" step="2"><div class="was" id="w-staff"></div><div class="help" id="h-staff"></div></div>
+    <div class="ctl"><div class="top"><label for="waste">Food thrown away</label><span class="val" id="v-waste"></span></div>
+      <input type="range" id="waste" min="2" max="30" step="1"><div class="was" id="w-waste"></div><div class="help">Share of prepared food that gets binned. Prep too little and you run out.</div></div>
+    <div class="ctl"><div class="top"><label for="cap">Longest line you'll allow</label><span class="val" id="v-cap"></span></div>
+      <input type="range" id="cap" min="3" max="15" step="1"><div class="was" id="w-cap"></div><div class="help">Past this wait, guests are turned away or walk out. Shorter limit, fewer sales.</div></div>
+  </div>
+  <button class="reset" id="reset">Reset to Baseline</button>
+</section>
+
+<section>
+  <h2>AI Business Advisor</h2>
+  <div class="advisor" aria-live="polite">
+    <div class="who">Rule-based explainer · reads the simulator's numbers, no live AI model</div>
+    <h3 id="a-title"></h3><p id="a-body"></p><p id="a-next" class="hint"></p>
+  </div>
+</section>
+
+<section>
+  <h2>Baseline vs now</h2>
+  <p class="sub">Typical day. Green means better for the café, red means worse.</p>
+  <div class="panel" id="cmp"></div>
+</section>
+
+<section>
+  <h2>Where the money goes</h2>
+  <p class="sub">Each bar is a day's costs. The gold line is revenue; green is profit left over.</p>
+  <div class="panel bars">
+    <div class="lab">Baseline</div><div class="stack" id="s0"></div>
+    <div class="lab">Now</div><div class="stack" id="s1"></div>
+    <div class="legend"><span style="--k:var(--c1)">Wages</span><span style="--k:var(--c2)">Food used</span><span style="--k:var(--c3)">Food wasted</span><span style="--k:var(--c4)">Rent, fees</span><span style="--k:var(--good)">Profit</span></div>
+  </div>
+</section>
+
+<section>
+  <details>
+    <summary>How the numbers work (assumptions)</summary>
+    <ul>
+      <li><b>All figures are fictional</b> and made up for teaching. Same inputs always give the same results; there is no randomness.</li>
+      <li><b>Demand</b> = 470 × (6 ÷ price)<sup>1.2</sup>. Higher prices lose guests; lower prices win them.</li>
+      <li><b>Capacity</b> = staff hours × 10 orders per hour. Staff cost = hours × $20.</li>
+      <li><b>Natural wait</b> = 2 + 7 × (demand ÷ capacity)³ minutes, max 25. Your line limit caps the wait; if the natural wait exceeds it, that share of guests leaves.</li>
+      <li><b>Happiness</b> starts at 88, minus 3 per wait minute over 4, minus 4 per $1 above $6, minus a stock-out penalty, plus a small bonus for extra staff. Kept between 20 and 98.</li>
+      <li><b>Repeat visits</b>: orders scale by 1 + 0.004 × (happiness − 80), limited to −15% / +10%.</li>
+      <li><b>Waste</b>: under 10% waste you run out of items and lose 1.2 × (10% − waste) of orders.</li>
+      <li><b>Costs</b>: food $1.55 per order served, plus the wasted share; card fees 3% of revenue; rent and utilities $650/day.</li>
+      <li><b>Limits</b>: orders can't exceed 105% of staff capacity; price $4–$9; staff 24–100 hours; waste 2–30%; line limit 3–15 min.</li>
+      <li>The wait uses demand before the happiness effect, a deliberate simplification.</li>
+    </ul>
+  </details>
+</section>
+<p class="note">Pour Decision Café is a fictional business. All numbers are illustrative, not real café data.</p>
+</div>
+
+<script>
+const K={D:470,P0:6,E:1.2,OPH:10,WAGE:20,FOOD:1.55,FEE:.03,OH:650};
+const B={price:6,staff:52,waste:14,cap:15};
+const SC={grow:{v:{price:5.25,staff:64,waste:14,cap:15},t:"Grow Sales: cut price to $5.25, add staff hours, keep waste and line limit as they are."},
+profit:{v:{price:6.75,staff:46,waste:8,cap:10},t:"Protect Profit: raise price, trim staff, cut waste to 8%, and cap the line at 10 minutes."},
+delight:{v:{price:6,staff:70,waste:12,cap:8},t:"Delight Customers: same price, many more staff hours, less waste, and a short-line promise."}};
+const cl=(x,a,b)=>Math.min(b,Math.max(a,x));
+function sim(i){
+  const cap=i.staff*K.OPH, dem=K.D*Math.pow(K.P0/i.price,K.E);
+  const u=Math.min(1.6,dem/cap), nat=Math.min(25,2+7*Math.pow(u,3)), wait=Math.min(nat,i.cap);
+  const lq=nat>i.cap?Math.min(.5,(nat-i.cap)/nat):0, w=i.waste/100, st=Math.max(0,.10-w);
+  const sat=cl(88-3*Math.max(0,wait-4)-4*(i.price-K.P0)-50*st+.06*(i.staff-52),20,98);
+  const want=dem*cl(1+.004*(sat-80),.85,1.1), served=Math.min(want,cap*1.05);
+  const walk=Math.round(served*lq), stock=Math.round(served*(1-lq)*1.2*st);
+  const orders=Math.max(0,Math.round(served*(1-lq)*(1-1.2*st)));
+  const rev=orders*i.price, staff=i.staff*K.WAGE, used=orders*K.FOOD, bought=used/(1-w), wasted=bought-used;
+  const fixed=K.OH+rev*K.FEE, profit=rev-staff-bought-fixed;
+  return {orders,rev,staff,used,wasted,fixed,profit,sat,wait,nat,walk,stock,capHit:want>cap*1.05,cap};
+}
+const base=sim(B); let cur={...B}, active=null;
+const $=id=>document.getElementById(id);
+const m=n=>(n<0?"−$":"$")+Math.round(Math.abs(n)).toLocaleString("en-US");
+const m2=n=>"$"+n.toFixed(2);
+const sgn=n=>n>0?"+":n<0?"−":"";
+function rows(r){return [
+ ["Daily revenue",base.rev,r.rev,m,1,x=>m(Math.abs(x))],
+ ["Operating profit",base.profit,r.profit,m,1,x=>m(Math.abs(x))],
+ ["Guest happiness",base.sat,r.sat,x=>Math.round(x)+"/100",1,x=>Math.abs(Math.round(x))+" pts"],
+ ["Orders",base.orders,r.orders,x=>Math.round(x),1,x=>Math.abs(Math.round(x))],
+ ["Food waste cost",base.wasted,r.wasted,m,-1,x=>m(Math.abs(x))],
+ ["Average wait",base.wait,r.wait,x=>x.toFixed(1)+" min",-1,x=>Math.abs(x).toFixed(1)+" min"]];}
+function seg(r,scale){
+  const parts=[[r.staff,"var(--c1)"],[r.used,"var(--c2)"],[r.wasted,"var(--c3)"],[r.fixed,"var(--c4)"]];
+  let h=parts.map(p=>`<i style="width:${p[0]/scale*100}%;background:${p[1]}"></i>`).join("");
+  if(r.profit>0)h+=`<i style="width:${r.profit/scale*100}%;background:var(--good)"></i>`;
+  return h+`<span class="mark" style="left:${Math.min(99,r.rev/scale*100)}%"></span>`;
+}
+function advise(r){
+  const changed=Object.keys(B).some(k=>B[k]!==cur[k]);
+  const dO=(r.orders/base.orders-1)*100, dP=r.profit-base.profit, dS=r.sat-base.sat;
+  let t,b,n;
+  if(!changed){
+    t="Why a full café can still lose money";
+    b=`Today ${base.orders} orders bring in ${m(base.rev)}, but ${m(base.staff)} goes to wages, ${m(base.wasted)} is thrown away, and guests wait about ${base.wait.toFixed(1)} minutes. That leaves just ${m(base.profit)} profit, or ${m2(base.profit/base.orders)} per order. A busy café only makes money if each extra order earns more than it costs to serve.`;
+    n="Try a scenario, or nudge price by $0.25 and watch orders and profit move in opposite directions.";
+  } else {
+    if(dO>=3&&dP<=-10)t="Busier, but poorer";
+    else if(dP>=10&&dS<=-3)t="More profit, unhappier guests";
+    else if(dP>=10)t="A win for profit"+(dS>=1?" and guests":"");
+    else if(dP<=-10&&dS>=3)t="Happier guests, thinner profit";
+    else if(dP<=-10&&dO<=-3)t="Fewer sales and less profit";
+    else t="Small change, similar result";
+    b=`Orders went ${dO>=0?"up":"down"} ${Math.abs(dO).toFixed(0)}% to ${r.orders}, and profit ${dP>=0?"rose":"fell"} ${m(Math.abs(dP))} to ${m(r.profit)} a day. Guest happiness is ${Math.round(r.sat)}/100 (${sgn(dS)}${Math.abs(Math.round(dS))}). `;
+    const d=[["revenue "+(r.rev>=base.rev?"rose":"fell")+" "+m(Math.abs(r.rev-base.rev)),Math.abs(r.rev-base.rev)],
+      ["wages "+(r.staff>=base.staff?"rose":"fell")+" "+m(Math.abs(r.staff-base.staff)),Math.abs(r.staff-base.staff)],
+      ["wasted food "+(r.wasted>=base.wasted?"rose":"fell")+" "+m(Math.abs(r.wasted-base.wasted)),Math.abs(r.wasted-base.wasted)*2],
+      ["ingredients "+(r.used>=base.used?"rose":"fell")+" "+m(Math.abs(r.used-base.used)),Math.abs(r.used-base.used)]].sort((a,c)=>c[1]-a[1])[0];
+    b+=`The biggest swing: ${d[0]}. `;
+    if(r.walk>0)b+=`Your line limit turns away about ${r.walk} guests a day. `;
+    if(r.stock>0)b+=`Cutting waste this low means you run out of items and lose about ${r.stock} orders. `;
+    if(r.capHit)b+=`Demand is bigger than your team can serve, so sales are capped by staffing. `;
+    if(r.profit<0)b+="At these settings the café loses money every day.";
+    n=r.wait>9?"The line is long. Extra staff hours speed service but each one costs $20.":r.sat<70?"Guests are unhappy. Shorter waits or a lower price would win some back.":r.profit<base.profit?"Profit is below baseline. Compare wages, wasted food, and price to find the leak.":"Looking good. Test whether a small price rise keeps most of your guests.";
+  }
+  $("a-title").textContent=t;$("a-body").textContent=b;$("a-next").textContent="Next idea: "+n;
+}
+function render(){
+  const r=sim(cur);
+  $("v-price").textContent=m2(cur.price);$("v-staff").textContent=cur.staff+" hrs";$("v-waste").textContent=cur.waste+"%";$("v-cap").textContent=cur.cap+" min";
+  $("h-staff").textContent=`About ${(cur.staff/12).toFixed(1)} people on the floor all day. Costs ${m(r.staff)} a day.`;
+  for(const k in B){$("w-"+k).textContent=B[k]!==cur[k]?"Baseline: "+({price:m2(B.price),staff:B.staff+" hrs",waste:B.waste+"%",cap:B.cap+" min"})[k]:"";$(k).value=cur[k];}
+  $("bp").textContent=m(r.profit)+" ("+sgn(r.profit-base.profit)+m(Math.abs(r.profit-base.profit))+")";
+  $("bs").textContent=Math.round(r.sat)+"/100";
+  $("cmp").innerHTML=`<div class="row h"><span></span><span>Baseline</span><span>Now</span><span></span></div>`+rows(r).map(([l,b0,c,f,dir,fd])=>{
+    const d=c-b0,small=Math.abs(d)<0.05;const good=d*dir>0;
+    return `<div class="row"><span>${l}</span><span>${f(b0)}</span><b>${f(c)}</b>${small?'<span class="chip flat">no change</span>':`<span class="chip ${good?"up":"dn"}">${d>0?"▲":"▼"} ${fd(d)}</span>`}</div>`}).join("");
+  const sc=Math.max(base.rev,r.rev,base.staff+base.used+base.wasted+base.fixed,r.staff+r.used+r.wasted+r.fixed)*1.02;
+  $("s0").innerHTML=seg(base,sc);$("s1").innerHTML=seg(r,sc);
+  document.querySelectorAll(".scn button").forEach(x=>x.classList.toggle("on",x.dataset.s===active));
+  $("scap").textContent=active?SC[active].t:"";
+  advise(r);
+}
+for(const k in B)$(k).addEventListener("input",e=>{cur[k]=+e.target.value;active=null;render()});
+document.querySelectorAll(".scn button").forEach(x=>x.addEventListener("click",()=>{active=x.dataset.s;cur={...SC[active].v};render()}));
+$("reset").addEventListener("click",()=>{cur={...B};active=null;render()});
+render();
+</script>
+</body>
+</html>
