@@ -4,7 +4,7 @@
 
 > ⚠️ **All data is fictional.** Pour Decision Café is an invented business. Every figure is illustrative and is not real café data.
 
-**▶ Live demo:** https://YOUR-USERNAME.github.io/busy-cafe-paradox/
+**▶ Live demo:** https://santhoshashokkumar.github.io/busy-cafe-paradox/dashboard.html
 
 ## What's inside
 
